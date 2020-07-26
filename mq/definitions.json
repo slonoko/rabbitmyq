@@ -1,0 +1,111 @@
+{
+    "rabbit_version": "3.8.5",
+    "rabbitmq_version": "3.8.5",
+    "product_name": "RabbitMQ",
+    "product_version": "3.8.5",
+    "users": [
+        {
+            "name": "account",
+            "password_hash": "szCnA8aSpoomwqVM2Q3GZAOK7UcKZdDt3bjAOEHBv+ZYkRDg",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": ""
+        },
+        {
+            "name": "guest",
+            "password_hash": "qRw5KBQO0B+8kXwf0BgPsg/nvYIBGFP5rqLiA6EKo70md+W7",
+            "hashing_algorithm": "rabbit_password_hashing_sha256",
+            "tags": "administrator"
+        }
+    ],
+    "vhosts": [
+        {
+            "name": "/"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "account",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        },
+        {
+            "user": "guest",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "topic_permissions": [
+        {
+            "user": "account",
+            "vhost": "/",
+            "exchange": "",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "parameters": [],
+    "global_parameters": [
+        {
+            "name": "cluster_name",
+            "value": "rabbit@my-rabbit"
+        },
+        {
+            "name": "internal_cluster_id",
+            "value": "rabbitmq-cluster-id-QEr7IoClS7Kg76gF1apRmw"
+        }
+    ],
+    "policies": [],
+    "queues": [
+        {
+            "name": "user",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        },
+        {
+            "name": "personaldata",
+            "vhost": "/",
+            "durable": true,
+            "auto_delete": false,
+            "arguments": {
+                "x-queue-type": "classic"
+            }
+        }
+    ],
+    "exchanges": [
+        {
+            "name": "account",
+            "vhost": "/",
+            "type": "topic",
+            "durable": true,
+            "auto_delete": false,
+            "internal": false,
+            "arguments": {}
+        }
+    ],
+    "bindings": [
+        {
+            "source": "account",
+            "vhost": "/",
+            "destination": "user",
+            "destination_type": "queue",
+            "routing_key": "personaldata.created",
+            "arguments": {}
+        },
+        {
+            "source": "account",
+            "vhost": "/",
+            "destination": "personaldata",
+            "destination_type": "queue",
+            "routing_key": "user.created",
+            "arguments": {}
+        }
+    ]
+}
